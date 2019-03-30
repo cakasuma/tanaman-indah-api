@@ -19,12 +19,12 @@ router.post('/feedback', (req, res) => {
 })
 
 router.get('/feedback', (req, res) => {
-    if (!req.query.length) {
+    if (!req.body || Object.keys(req.body).length === 0) {
         FeedbackModel.find().then(doc => res.json(doc))
             .catch(err => res.status(500).json(err))
     } else {
         FeedbackModel.findOne({
-            _id: ObjectId(req.query.id),
+            _id: req.body.id,
         }).then(doc => res.json(doc))
             .catch(err => res.status(500).json(err))
     }
@@ -42,13 +42,13 @@ router.get('/feedback', (req, res) => {
 //       .catch(err => res.status(500).json(err))
 // })
 
-router.delete('/person', (req, res) => {
-    if (!req.query.id) res.status(400).send('Missing URL parameter id')
+router.delete('/feedback', (req, res) => {
+    if (!req.body.id) res.status(400).send('Missing URL parameter id')
 
-    PersonModel.findOneAndRemove({
-        _id: ObjectId(req.query.email),
+    FeedbackModel.findOneAndRemove({
+        _id: req.body.id,
     }).then(doc => res.json(doc))
-      .catch(err => res.status(500).json(err))
+        .catch(err => res.status(500).json(err))
 })
 
 module.exports = router
