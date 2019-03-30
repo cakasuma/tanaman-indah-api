@@ -1,0 +1,21 @@
+{
+  "name": "plant-store-rest",
+  "version": "1.0.0",
+  "description": "tanaman indah rest api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "serve": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "amam mustofa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
