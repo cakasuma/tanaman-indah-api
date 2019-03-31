@@ -1,10 +1,12 @@
 require('dotenv').config()
 let express = require('express')
+var cors = require('cors');
 let app = express()
 let feedbackRoute =  require('./routes/feedback')
 let path = require('path')
 let bodyParser = require('body-parser')
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use((req, res, next) => {
     console.log(`${new Date()} => ${req.originalUrl}`, req.body)
