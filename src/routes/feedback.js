@@ -1,4 +1,4 @@
-let FeedbackModel = require('../models/feedback.model')
+let FeedbackModel = require('../models/schema/feedback.model')
 let express = require('express')
 let router = express.Router()
 
@@ -50,8 +50,8 @@ router.delete('/feedback/:id', (req, res) => {
     if (!req.params.id) res.status(400).send('Missing URL parameter id')
 
     FeedbackModel.findOneAndRemove({
-        _id: req.params.id,
-    }).then(doc => res.json(doc))
+            _id: req.params.id,
+        }).then(doc => res.json(doc))
         .catch(err => res.status(500).json(err))
 })
 
