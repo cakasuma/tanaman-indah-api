@@ -19,15 +19,19 @@ router.post('/feedback', (req, res) => {
 })
 
 router.get('/feedback', (req, res) => {
-    if (!req.body || Object.keys(req.body).length === 0) {
-        FeedbackModel.find().then(doc => res.json(doc))
-            .catch(err => res.status(500).json(err))
-    } else {
-        FeedbackModel.findOne({
-            _id: req.body.id,
-        }).then(doc => res.json(doc))
-            .catch(err => res.status(500).json(err))
+    FeedbackModel.find().then(doc => res.json(doc))
+        .catch(err => res.status(500).json(err))
+})
+
+router.get('/feedback/:id', (req, res) => {
+    if (!req.params) {
+        res.status(400).send('Request params is missing')
     }
+
+    FeedbackModel.findOne({
+            _id: req.params.id,
+        }).then(doc => res.json(doc))
+        .catch(err => res.status(500).json(err))
 })
 
 // TODO: UPDATE API
