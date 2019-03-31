@@ -24,8 +24,8 @@ router.get('/feedback', (req, res) => {
 })
 
 router.get('/feedback/:id', (req, res) => {
-    if (!req.params) {
-        res.status(400).send('Request params is missing')
+    if (!req.params.id) {
+        res.status(400).send('Missing URL parameter id')
     }
 
     FeedbackModel.findOne({
@@ -46,11 +46,11 @@ router.get('/feedback/:id', (req, res) => {
 //       .catch(err => res.status(500).json(err))
 // })
 
-router.delete('/feedback', (req, res) => {
-    if (!req.body.id) res.status(400).send('Missing URL parameter id')
+router.delete('/feedback/:id', (req, res) => {
+    if (!req.params.id) res.status(400).send('Missing URL parameter id')
 
     FeedbackModel.findOneAndRemove({
-        _id: req.body.id,
+        _id: req.params.id,
     }).then(doc => res.json(doc))
         .catch(err => res.status(500).json(err))
 })
