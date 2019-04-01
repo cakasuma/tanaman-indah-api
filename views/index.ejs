@@ -11,8 +11,19 @@
 </head>
 
 <body>
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo center">Tanaman Indah REST</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="sass.html">Home</a></li>
+                <li><a href="badges.html">Add</a></li>
+                <li><a href="collapsible.html">View</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>Add plant</h1>
+        <h3>Add plant</h3>
         <%= typeof msg != 'undefined' ? msg : '' %>
         <div class="row">
             <form class="col s12" action="/upload" method="POST" enctype="multipart/form-data">
