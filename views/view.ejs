@@ -1,0 +1,29 @@
+<% include components/header.ejs %>
+<div class="container">
+    <h3>View plant</h3>
+    <%= typeof msg != 'undefined' ? msg : '' %>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for(var i=0; i < doc.length; i++) { %>
+            <tr>
+                <td><img src="<%= doc[i].imagePath %>" alt="<%= doc[i].name %>" height="42" width="42"></td>
+                <td><%= doc[i].name %></td>
+                <td><%= doc[i].description %></td>
+                <td><%= doc[i].price %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <br>
+</div>
+
+<% include components/footer.ejs %>

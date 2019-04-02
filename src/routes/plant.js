@@ -74,4 +74,23 @@ router.post('/upload', (req, res) => {
     })
 })
 
+router.get('/view', (req, res) => {
+    PlantModel.find().then(doc => {
+            res.render('view', {
+                msg: 'Successfully loaded',
+                doc: doc
+            });
+        })
+        .catch(err => {
+            res.render('view', {
+                msg: 'Failed to load'
+            });
+            console.error(err);
+        })
+})
+
+router.get('/add', (req, res) => {
+    res.render('add');
+})
+
 module.exports = router
