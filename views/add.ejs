@@ -4,7 +4,7 @@
     <h3>Add plant</h3>
     <%= typeof msg != 'undefined' ? msg : '' %>
     <div class="row">
-        <form class="col s12" action="/upload" method="POST" enctype="multipart/form-data">
+        <form class="col s12" action="/plant" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="input-field col s12">
                     <input name="name" id="name" type="text" class="validate" required>
