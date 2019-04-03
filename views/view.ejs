@@ -2,9 +2,10 @@
 <div class="container">
     <h3>View plant</h3>
     <%= typeof msg != 'undefined' ? msg : '' %>
-    <table class="responsive-table">
+    <table class="responsive-table highlight">
         <thead>
             <tr>
+                <th class="center-align">Action</th>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -15,6 +16,7 @@
         <tbody>
             <% for(var i=0; i < doc.length; i++) { %>
             <tr>
+                <td class="center-align"><a class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>button</a></td>
                 <td><img src="<%= doc[i].imagePath %>" alt="<%= doc[i].name %>" height="42" width="42"></td>
                 <td><%= doc[i].name %></td>
                 <td><%= doc[i].description %></td>

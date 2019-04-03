@@ -2,7 +2,7 @@ let FeedbackModel = require('../models/schema/feedback.model')
 let express = require('express')
 let router = express.Router()
 
-
+// SECTION 1 : REST API
 router.post('/feedback', (req, res) => {
     if (!req.body) {
         res.status(400).send('Request body is missing')
@@ -53,6 +53,20 @@ router.delete('/feedback/:id', (req, res) => {
             _id: req.params.id,
         }).then(doc => res.json(doc))
         .catch(err => res.status(500).json(err))
+})
+
+// SECTION 2 API ROUTING AND FUNCTION
+router.get('/feedbacks', (req, res) => {
+    FeedbackModel.find().then(doc => res.render('feedbacks', {
+        msg: 'load successfully',
+        doc: doc
+    }))
+    .catch(err => {
+        res.render('feedbacks', {
+            msg: 'Failed to load'
+        });
+        console.error(err);
+    })
 })
 
 module.exports = router

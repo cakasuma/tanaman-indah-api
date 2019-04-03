@@ -1,0 +1,29 @@
+<% include components/header.ejs %>
+<div class="container">
+    <h3>View feedbacks</h3>
+    <%= typeof msg != 'undefined' ? msg : '' %>
+    <table class="responsive-table highlight">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for(var i=0; i < doc.length; i++) { %>
+            <tr>
+                <td><%= doc[i].name %></td>
+                <td><%= doc[i].email %></td>
+                <td><%= doc[i].subject %></td>
+                <td><%= doc[i].message %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <br>
+</div>
+
+<% include components/footer.ejs %>
