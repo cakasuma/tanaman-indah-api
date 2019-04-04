@@ -3,6 +3,7 @@ let express = require('express')
 let router = express.Router()
 let multer = require('multer')
 let path = require('path')
+let fs = require('fs')
 
 // SECTION 1 REST API
 
@@ -52,6 +53,7 @@ router.get('/plant', (req, res) => {
 router.get('/plant/:id', (req, res) => {
     if (!req.params.id) {
         res.status(400).send('Missing URL parameter id')
+        return
     }
 
     PlantModel.findOne({
@@ -62,7 +64,10 @@ router.get('/plant/:id', (req, res) => {
 //put
 //TODO: UPDATE API
 router.put('/plant/:id', (req, res) => {
-    if (!req.params.id) res.status(400).send('Missing URL parameter id')
+    if (!req.params.id) {
+        res.status(400).send('Missing URL parameter id')
+        return
+    }
 
     PlantModel.findOneAndUpdate({
         _id: req.params.id,
@@ -74,7 +79,10 @@ router.put('/plant/:id', (req, res) => {
 
 //delete
 router.delete('/plant/:id', (req, res) => {
-    if (!req.params.id) res.status(400).send('Missing URL parameter id')
+    if (!req.params.id) {
+        res.status(400).send('Missing URL parameter id')
+        return
+    }
 
     PlantModel.findOneAndRemove({
             _id: req.params.id,
@@ -121,20 +129,40 @@ const checkFileType = (file, callback) => {
 router.get('/view', (req, res) => {
     PlantModel.find().then(doc => {
             res.render('view', {
-                msg: 'Successfully loaded',
-                doc: doc
+                doc: doc,
+                msg: req.query.msg
             });
         })
         .catch(err => {
             res.render('view', {
-                msg: 'Failed to load'
+                msg: 'Failed to load with error ' + err
             });
-            console.error(err);
         })
 })
 
 router.get('/add', (req, res) => {
     res.render('add');
+})
+
+router.get('/delete/:id', (req, res) => {
+    if (!req.params.id) {
+        res.status(400).send('Missing URL parameter id')
+        return
+    }
+
+    PlantModel.findOneAndRemove({
+            _id: req.params.id,
+        }).then(doc => {
+            const realPath = doc.imagePath
+            const pathArray = realPath.split("/")
+            const imageIndex = pathArray.findIndex((path) => path === 'images') + 1
+            const imagePath = pathArray[imageIndex]
+            fs.unlink('./public/images/' + imagePath, (err) => {
+                if (err) console.error(err)
+                res.redirect('/view?msg=deleted+successfully');
+              });
+        })
+        .catch(err => console.error(err))
 })
 
 module.exports = router

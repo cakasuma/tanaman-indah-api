@@ -4,8 +4,9 @@ let router = express.Router()
 
 // SECTION 1 : REST API
 router.post('/feedback', (req, res) => {
-    if (!req.body) {
+    if (!req.body || Object.keys(req.body).length === 0) {
         res.status(400).send('Request body is missing')
+        return
     }
 
     let model = new FeedbackModel(req.body)
@@ -26,6 +27,7 @@ router.get('/feedback', (req, res) => {
 router.get('/feedback/:id', (req, res) => {
     if (!req.params.id) {
         res.status(400).send('Missing URL parameter id')
+        return
     }
 
     FeedbackModel.findOne({
@@ -47,9 +49,12 @@ router.get('/feedback/:id', (req, res) => {
 // })
 
 router.delete('/feedback/:id', (req, res) => {
-    if (!req.params.id) res.status(400).send('Missing URL parameter id')
+    if (!req.params.id) {
+        res.status(400).send('Missing URL parameter id')
+        return
+    }
 
-    FeedbackModel.findOneAndRemove({
+    FeedbackModel.findOneAndDelete({
             _id: req.params.id,
         }).then(doc => res.json(doc))
         .catch(err => res.status(500).json(err))
@@ -58,7 +63,6 @@ router.delete('/feedback/:id', (req, res) => {
 // SECTION 2 API ROUTING AND FUNCTION
 router.get('/feedbacks', (req, res) => {
     FeedbackModel.find().then(doc => res.render('feedbacks', {
-        msg: 'load successfully',
         doc: doc
     }))
     .catch(err => {
